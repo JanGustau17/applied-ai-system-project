@@ -279,8 +279,7 @@ The walkthrough demonstrates end-to-end:
 
 ## 🔗 GitHub Repository
 
-> **[github.com/YOUR_USERNAME/ai110-module1show-gameglitchinvestigator-starter](https://github.com/YOUR_USERNAME/ai110-module1show-gameglitchinvestigator-starter)**
-> *(Replace with your actual repo URL)*
+> ** https://github.com/JanGustau17/applied-ai-system-project.git **
 
 ---
 
