@@ -1,5 +1,8 @@
 import random
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()  # loads OPENAI_API_KEY from .env if present
 from logic_utils import (
     ai_hint_engine,
     check_guess,
@@ -128,14 +131,18 @@ if st.session_state.status != "playing":
     st.stop()
 
 if submit:
-    st.session_state.attempts += 1
-
     ok, guess_int, err = parse_guess(raw_guess)
 
     if not ok:
+        # Invalid input does not consume an attempt — guardrail rejected it before it reached game logic
         st.session_state.history.append(raw_guess)
         st.error(err)
+    elif not (low <= guess_int <= high):
+        # Out-of-range guess is rejected without counting as an attempt
+        st.session_state.history.append(raw_guess)
+        st.error(f"Please enter a number between {low} and {high}.")
     else:
+        st.session_state.attempts += 1  # only count valid, in-range guesses as attempts
         st.session_state.history.append(guess_int)
 
         # BUG FIX: was converting secret to str on even attempts, causing lexicographic comparison (e.g. "9" > "50" = True)
